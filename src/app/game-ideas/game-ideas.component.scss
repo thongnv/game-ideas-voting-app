@@ -18,6 +18,26 @@
   }
 }
 
+.desc-col {
+  .vote-icons {
+    mat-icon {
+      margin-left: 2px;
+      font-size: 16px;
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+
+        &:hover {
+            color: green;
+        }
+
+        &.active {
+            color: green;
+        }
+    }
+  }
+}
+
 .submit-idea {
   margin-top: 20px;
   padding-left: 16px;

@@ -10,12 +10,12 @@ export class GameIdeasService {
 
   getIdeas(): Idea[] {
     const ideas = localStorage.getItem('gameIdeas');
-    return ideas ? JSON.parse(ideas) : [];
-    // return [
-    //   { id: 1, description: 'Idea 1', upvotes: 10, downvotes: 2, status: "none"  },
-    //   { id: 2, description: 'Idea 2', upvotes: 5, downvotes: 1, status: "upvoted"  },
-    //   { id: 3, description: 'Idea 3', upvotes: 8, downvotes: 3, status: "downvoted"  },
-    // ];
+    return ideas ? JSON.parse(ideas) : 
+    [
+      { id: 1, description: 'this is an awesome idea', upvotes: 10, downvotes: 2, status: "none"  },
+      { id: 2, description: 'my idea for the racing game', upvotes: 5, downvotes: 1, status: "none"  },
+      { id: 3, description: 'I have an idea of building a console game for elders', upvotes: 8, downvotes: 3, status: "none"  }
+    ];
   }
 
   setIdeas(ideas: Idea[]) {

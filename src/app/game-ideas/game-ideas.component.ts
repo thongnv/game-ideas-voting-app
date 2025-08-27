@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatTableModule } from '@angular/material/table';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
+import {MatSort, MatSortModule} from '@angular/material/sort';
 
 
 import { Idea } from '../game-ideas/idea.interface';
@@ -24,7 +24,7 @@ import { GameIdeasService } from './game-ideas.service';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    MatDividerModule
+    MatSortModule,
   ],
   templateUrl: './game-ideas.component.html',
   styleUrl: './game-ideas.component.scss'
@@ -36,10 +36,18 @@ private gameIdeasService = inject(GameIdeasService);
   dataSource: Idea[] = [];
   displayIdeas: Idea[] = [];
   searchIdeaInput = '';
+  sortTableDataSource = new MatTableDataSource<Idea>();
+
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
+
+  ngAfterViewInit() {
+    this.sortTableDataSource.sort = this.sort;
+  }
 
   ngOnInit(): void {
     this.dataSource = this.gameIdeasService.getIdeas();
     this.displayIdeas = this.dataSource.slice();
+    this.sortTableDataSource = new MatTableDataSource(this.displayIdeas)
   }
 
   upvote(idea: Idea) {
