@@ -8,6 +8,7 @@
       placeholder="Input an Idea description to search..."
       [(ngModel)]="searchIdeaInput"
     />
+   <a class="submit-idea" routerLink="/submit-idea">Submit your Game Idea!</a>
   </div>
   <div *ngIf="!sortTableDataSource.data.length">No Game Ideas found!</div>
 </form>
@@ -65,6 +66,3 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
 
-<div class="submit-idea">
-  <a routerLink="/submit-idea">Submit your Game Idea!</a>
-</div>

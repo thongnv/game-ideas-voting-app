@@ -1,12 +1,12 @@
 .submit-form {
-  margin-top: 20px;
-  padding-left: 16px;
+  margin: 20px 16px;
 
   .idea-input {
     position: relative;
-    width: calc(100% - 40px);
+    width: 100%;
     min-height: 100px;
-    margin: 10px 0 30px;
+    box-sizing: border-box;
+    margin: 10px 0 10px;
     padding: 5px 10px;
     border: solid 1px rgb(99, 92, 92);
     border-radius: 5px;
@@ -14,5 +14,11 @@
     &:focus-visible {
       outline: none;
     }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
   }
 }

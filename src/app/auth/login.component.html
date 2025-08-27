@@ -1,0 +1,9 @@
+<div class="login-container">
+  <h2>Login</h2>
+  <form>
+    <input [formControl]="username" placeholder="Username" />
+    <input [formControl]="password" type="password" placeholder="Password" />
+    <button type="button" (click)="login()">Login</button>
+    <div *ngIf="error" class="error">{{ error }}</div>
+  </form>
+</div>

@@ -29,7 +29,7 @@ import { Router } from '@angular/router';
 export class GameIdeaSubmissionComponent {
 
   private readonly gameIdeasService = inject(GameIdeasService);
-  private readonly router = inject(Router);
+  router = inject(Router);
 
   ideaDescription = new FormControl('', {
     nonNullable: true,
