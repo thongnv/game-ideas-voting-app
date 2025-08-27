@@ -27,13 +27,13 @@
       height: 14px;
       cursor: pointer;
 
-        &:hover {
-            color: green;
-        }
+      &:hover {
+        color: green;
+      }
 
-        &.active {
-            color: green;
-        }
+      &.active {
+        color: green;
+      }
     }
   }
 }

@@ -3,11 +3,10 @@ import { Component, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 import { Idea } from '../game-ideas/idea.interface';
 import { RouterModule } from '@angular/router';
@@ -27,14 +26,18 @@ import { GameIdeasService } from './game-ideas.service';
     MatSortModule,
   ],
   templateUrl: './game-ideas.component.html',
-  styleUrl: './game-ideas.component.scss'
+  styleUrl: './game-ideas.component.scss',
 })
 export class GameIdeasComponent {
-private gameIdeasService = inject(GameIdeasService);
+  private gameIdeasService = inject(GameIdeasService);
 
-  displayedColumns: string[] = ['description', 'upvotes', 'downvotes', 'status'];
+  displayedColumns: string[] = [
+    'description',
+    'upvotes',
+    'downvotes',
+    'status',
+  ];
   dataSource: Idea[] = [];
-  displayIdeas: Idea[] = [];
   searchIdeaInput = '';
   sortTableDataSource = new MatTableDataSource<Idea>();
 
@@ -46,8 +49,8 @@ private gameIdeasService = inject(GameIdeasService);
 
   ngOnInit(): void {
     this.dataSource = this.gameIdeasService.getIdeas();
-    this.displayIdeas = this.dataSource.slice();
-    this.sortTableDataSource = new MatTableDataSource(this.displayIdeas)
+    const displayIdeas = this.dataSource.slice();
+    this.sortTableDataSource = new MatTableDataSource(displayIdeas);
   }
 
   upvote(idea: Idea) {
@@ -83,7 +86,7 @@ private gameIdeasService = inject(GameIdeasService);
   }
 
   private saveIdea(idea: Idea) {
-    const index = this.dataSource.findIndex(i => i.id === idea.id);
+    const index = this.dataSource.findIndex((i) => i.id === idea.id);
     if (index !== -1) {
       this.dataSource[index] = idea;
       this.gameIdeasService.setIdeas(this.dataSource);
@@ -93,11 +96,12 @@ private gameIdeasService = inject(GameIdeasService);
   searchIdeaByDescription(event: any) {
     const input: string = event.target.value?.trim().toLowerCase();
     if (!input) {
-      this.displayIdeas = this.dataSource.slice();
+      this.sortTableDataSource = new MatTableDataSource(this.dataSource);
       return;
     }
-    this.displayIdeas = this.dataSource.filter(idea =>
+    const displayIdeas = this.dataSource.filter((idea) =>
       idea.description.toLowerCase().includes(input)
     );
+    this.sortTableDataSource = new MatTableDataSource(displayIdeas);
   }
 }

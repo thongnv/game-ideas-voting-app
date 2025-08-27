@@ -1,13 +1,19 @@
 <form class="submit-form" onsubmit="return false;">
-    <textarea
+  <textarea
     [formControl]="ideaDescription"
     class="idea-input"
-      name="ideaInput"
-      type="text"
-      matInput
-      placeholder="Input your Idea description..."
-    ></textarea>
+    name="ideaInput"
+    type="text"
+    matInput
+    placeholder="Input your Idea description..."
+  ></textarea>
   <div class="submit-btn">
-    <button matButton="outlined" (click)="submitIdea()" [disabled]="ideaDescription.invalid">Submit</button>
+    <button
+      matButton="outlined"
+      (click)="submitIdea()"
+      [disabled]="ideaDescription.invalid"
+    >
+      Submit
+    </button>
   </div>
 </form>
