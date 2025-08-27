@@ -8,6 +8,6 @@
       placeholder="Input your Idea description..."
     ></textarea>
   <div class="submit-btn">
-    <button matButton="outlined" (click)="submitIdea()">Submit</button>
+    <button matButton="outlined" (click)="submitIdea()" [disabled]="ideaDescription.invalid">Submit</button>
   </div>
 </form>

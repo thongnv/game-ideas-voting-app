@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,12 +10,15 @@ import {MatButtonModule} from '@angular/material/button';
 
 
 import { Idea } from '../game-ideas/idea.interface';
+import { RouterModule } from '@angular/router';
+import { GameIdeasService } from './game-ideas.service';
 
 @Component({
   selector: 'app-game-ideas',
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
@@ -27,7 +30,7 @@ import { Idea } from '../game-ideas/idea.interface';
   styleUrl: './game-ideas.component.scss'
 })
 export class GameIdeasComponent {
-// private ideaSearchService = inject(IdeaSearchService);
+private gameIdeasService = inject(GameIdeasService);
 
   displayedColumns: string[] = ['description', 'upvotes', 'downvotes', 'status'];
   dataSource: Idea[] = [];
@@ -35,14 +38,7 @@ export class GameIdeasComponent {
   searchIdeaInput = '';
 
   ngOnInit(): void {
-    // this.loadIdeas();
-
-    this.dataSource = [
-      { id: 1, description: 'Idea 1', upvotes: 10, downvotes: 2, status: "none"  },
-      { id: 2, description: 'Idea 2', upvotes: 5, downvotes: 1, status: "upvoted"  },
-      { id: 3, description: 'Idea 3', upvotes: 8, downvotes: 3, status: "downvoted"  },
-    ];
-
+    this.dataSource = this.gameIdeasService.getIdeas();
     this.displayIdeas = this.dataSource.slice();
   }
 
@@ -59,6 +55,7 @@ export class GameIdeasComponent {
       idea.upvotes += 1;
       idea.status = 'upvoted';
     }
+    this.saveIdea(idea);
   }
 
   downvote(idea: Idea) {
@@ -73,6 +70,15 @@ export class GameIdeasComponent {
       idea.upvotes -= 1;
       idea.downvotes += 1;
       idea.status = 'downvoted';
+    }
+    this.saveIdea(idea);
+  }
+
+  private saveIdea(idea: Idea) {
+    const index = this.dataSource.findIndex(i => i.id === idea.id);
+    if (index !== -1) {
+      this.dataSource[index] = idea;
+      this.gameIdeasService.setIdeas(this.dataSource);
     }
   }
 
