@@ -1,0 +1,46 @@
+<form class="search-form">
+    <div class="idea-input">
+    <input
+      name="ideaInput"
+      type="text"
+      matInput
+      (keydown.enter)="searchIdeaByDescription($event)"
+      placeholder="Input an Idea description to search..."
+      [(ngModel)]="searchIdeaInput"
+    />
+  </div>
+    <div *ngIf="!displayIdeas.length">No ideas found!</div>
+
+</form>
+
+<table
+  *ngIf="displayIdeas.length"
+  mat-table
+  [dataSource]="displayIdeas"
+  class="mat-elevation-z8"
+>
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef>description</th>
+    <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="upvotes">
+    <th mat-header-cell *matHeaderCellDef>upvotes</th>
+    <td mat-cell *matCellDef="let element">{{ element.upvotes }}<button matButton (click)="upvote(element)">+</button></td>
+  </ng-container>
+
+  <ng-container matColumnDef="downvotes">
+    <th mat-header-cell *matHeaderCellDef>downvotes</th>
+    <td mat-cell *matCellDef="let element">{{ element.downvotes }}<button matButton (click)="downvote(element)">+</button></td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef>voted</th>
+    <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+  </ng-container>
+
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

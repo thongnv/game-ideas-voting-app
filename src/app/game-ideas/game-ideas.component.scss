@@ -1,0 +1,33 @@
+.search-form {
+    margin-top: 20px;
+  padding-left: 16px;
+
+  .idea-input {
+    position: relative;
+    input[type="text"] {
+      min-width: 300px;
+      margin: 10px 0 30px;
+      padding: 5px 10px;
+      border: solid 1px rgb(99, 92, 92);
+      border-radius: 5px;
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+
+  }
+
+  .error {
+    color: red;
+  }
+}
+
+.mat-mdc-header-cell,
+.mat-mdc-cell {
+  border: none;
+}
+
+.mat-mdc-row:hover {
+  background-color: rgb(200, 200, 200);
+}
