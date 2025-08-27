@@ -1,12 +1,10 @@
 <form class="search-form">
   <div class="idea-input">
     <input
-      name="ideaInput"
+      [formControl]="searchIdeaInput"
       type="text"
       matInput
-      (keydown.enter)="searchIdeaByDescription($event)"
       placeholder="Input an Idea description to search..."
-      [(ngModel)]="searchIdeaInput"
     />
    <a class="submit-idea" routerLink="/submit-idea">Submit your Game Idea!</a>
   </div>

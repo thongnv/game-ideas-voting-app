@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -11,12 +11,13 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { Idea } from '../game-ideas/idea.interface';
 import { RouterModule } from '@angular/router';
 import { GameIdeasService } from './game-ideas.service';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
 
 @Component({
   selector: 'app-game-ideas',
   imports: [
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     MatFormFieldModule,
     MatInputModule,
@@ -38,7 +39,7 @@ export class GameIdeasComponent {
     'status',
   ];
   dataSource: Idea[] = [];
-  searchIdeaInput = '';
+  searchIdeaInput = new FormControl('');
   sortTableDataSource = new MatTableDataSource<Idea>();
 
   @ViewChild(MatSort) sort: MatSort = new MatSort();
@@ -51,6 +52,17 @@ export class GameIdeasComponent {
     this.dataSource = this.gameIdeasService.getIdeas();
     const displayIdeas = this.dataSource.slice();
     this.sortTableDataSource = new MatTableDataSource(displayIdeas);
+
+    this.searchIdeaInput.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        filter((value) => !value || value.length >= 2)
+      )
+      .subscribe((value) => {
+        const input: string = value?.trim().toLowerCase() ?? '';
+        this.searchIdeaByDescription(input);
+      });
   }
 
   upvote(idea: Idea) {
@@ -93,8 +105,7 @@ export class GameIdeasComponent {
     }
   }
 
-  searchIdeaByDescription(event: any) {
-    const input: string = event.target.value?.trim().toLowerCase();
+  private searchIdeaByDescription(input: string) {
     if (!input) {
       this.sortTableDataSource = new MatTableDataSource(this.dataSource);
       return;
