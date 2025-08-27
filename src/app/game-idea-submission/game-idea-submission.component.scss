@@ -4,7 +4,8 @@
 
   .idea-input {
     position: relative;
-    min-width: 500px;
+    width: calc(100% - 40px);
+    min-height: 100px;
     margin: 10px 0 30px;
     padding: 5px 10px;
     border: solid 1px rgb(99, 92, 92);
